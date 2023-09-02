@@ -1,3 +1,15 @@
+<?php
+session_start();
+ob_start();
+
+if ((isset($_POST['dangnhap'])) && ($_POST['dangnhap'])) {
+    $user = $_POST['user'];
+    $pass = $_POST['pass'];
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +18,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="../css/login.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <script src="./public/js/jquery-3-7-1-min.js"></script>
@@ -31,7 +43,7 @@
         <!-- Form login -->
         <div class="logreg-box">
             <div class="form-box login">
-                <form class="form">
+                <form class="form" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <h2>Log In</h2>
                     <div class="input-box">
                         <span class="icon">
