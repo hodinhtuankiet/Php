@@ -1,12 +1,19 @@
 <?php
 session_start();
 ob_start();
-
+include "../connect/user.php";
+include "../connect/connectdb.php";
 if ((isset($_POST['dangnhap'])) && ($_POST['dangnhap'])) {
     $user = $_POST['user'];
     $pass = $_POST['pass'];
+    $role = checkuser($user, $pass);
+    $_SESSION['role'] = $role;
+    if ($role == 1) {
+        header('location: index.php');
+    } else {
+        header('location: login.php');
+    }
 }
-
 
 ?>
 
@@ -21,7 +28,6 @@ if ((isset($_POST['dangnhap'])) && ($_POST['dangnhap'])) {
     <link rel="stylesheet" href="../css/login.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
-<script src="./public/js/jquery-3-7-1-min.js"></script>
 
 <body>
     <div class="background"></div>
@@ -43,13 +49,13 @@ if ((isset($_POST['dangnhap'])) && ($_POST['dangnhap'])) {
         <!-- Form login -->
         <div class="logreg-box">
             <div class="form-box login">
-                <form class="form" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                <form class="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <h2>Log In</h2>
                     <div class="input-box">
                         <span class="icon">
                             <i class='bx bxl-gmail'></i>
                         </span>
-                        <input id="email" name="email">
+                        <input id="email" name="user">
                         <label for="">Email</label>
                         <span class="form-message"></span>
                     </div>
@@ -68,7 +74,7 @@ if ((isset($_POST['dangnhap'])) && ($_POST['dangnhap'])) {
                         <a href="#">Forgot Password</a>
                     </div>
 
-                    <button type="submit" onclick="login()">Log In</button>
+                    <button type="submit" name="dangnhap" value="ĐĂNG NHẬP">Log In</button>
 
                     <div class="login-register">
                         <p>Don't have an account? <a href="/register" class="login-link">Sign Up</a> </p>
@@ -79,48 +85,6 @@ if ((isset($_POST['dangnhap'])) && ($_POST['dangnhap'])) {
         </div>
     </div>
 </body>
-<script>
-    function getCookie(cname) {
-        let name = cname + "=";
-        let decodedCookie = decodeURIComponent(document.cookie);
-        let ca = decodedCookie.split(';');
-        for (let i = 0; i < ca.length; i++) {
-            let c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return "";
-    }
 
-    function setCookie(cname, cvalue, exdays) {
-        const d = new Date();
-        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-        let expires = "expires=" + d.toUTCString();
-        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-    }
-
-    function login() {
-        $.ajax({
-            url: '/login',
-            type: 'POST',
-            data: {
-                username: $('#email').val(),
-                password: $('#password').val()
-            }
-        }).then(data => {
-            // console.log("ádasd");
-            setCookie('token', data.token, 1);
-            window.location.href = "/admin";
-        }).catch(err => {
-            if (err) {
-                $('#password-error').text('Mật khẩu không đúng').addClass('show');
-            }
-        });
-    }
-</script>
 
 </html>

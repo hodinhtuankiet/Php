@@ -1,10 +1,26 @@
 <?php
-function checkUser($user, $pass) {
-    $conn = connectdb(); 
-    $stmt = $conn->prepare("SELECT * FROM tbl_danhmuc WHERE user = :user AND pass = :pass");
-    $stmt->bindParam(':user', $user, PDO::PARAM_STR);
-    $stmt->bindParam(':pass', $pass, PDO::PARAM_STR);
+function connectdb()
+{
+    $dsn = 'mysql:host=localhost;dbname=user';
+    $username = 'root';
+    $password = '';
+    try {
+        $db = new PDO($dsn, $username, $password);
+        return $db; // Trả về đối tượng PDO
+    } catch (PDOException $e) {
+        $error_message = $e->getMessage();
+        include('database_error.php');
+        exit();
+    }
+}
+
+
+function checkUser($user, $pass)
+{
+    $conn = connectdb();
+    $stmt = $conn->prepare("SELECT * FROM table_user WHERE user = '" . $user . "' AND pass = '" . $pass . "'");
     $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $result;
+    $re = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    $result = $stmt->fetchAll();
+    return $result[0]['role'];
 }
