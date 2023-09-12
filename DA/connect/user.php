@@ -13,8 +13,6 @@ function connectdb()
         exit();
     }
 }
-
-
 function checkUser($user, $pass)
 {
     $conn = connectdb();
