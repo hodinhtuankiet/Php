@@ -921,11 +921,11 @@
 
 
     <button id="scroll-to-top-button"><i class="fa-solid fa-circle-up"></i></button>
-    <script src="./public/js/jav/animation.js"></script>
-    <script src="./public/js/jav/form_handle.js"></script>
-    <script src="./public/js/jav/app.js"></script>
-    <script src="./public/js/jav/index.js"></script>
-    <script src="./public/js/jav/show.js"></script>
+    <script src="../js/animation.js"></script>
+    <script src="../js/form_handle.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/index.js"></script>
+    <script src="./public/j/jav/show.js"></script>
     <script src="https://smtpjs.com/v3/smtp.js">
     </script>
     <script>
